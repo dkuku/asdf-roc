@@ -34,7 +34,7 @@ list_all_versions() {
 	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
 	# Change this function if roc has other means of determining installable versions.
 	# list_github_tags
-    # currently only nightly
+	# currently only nightly
 	echo 'nightly' && echo 'nightly-old'
 }
 
@@ -42,8 +42,19 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
-	os=`uname | tr '[:upper:]' '[:lower:]'`
-	arch=`uname -m`
+	arch=$(uname -m)
+	os=$(uname)
+	case $os in
+	Linux)
+		os="linux"
+		;;
+	Darwin)
+		os="macos"
+		;;
+	*)
+		os="unknown"
+		;;
+	esac
 
 	# TODO: Adapt the release URL convention for roc
 	# url="$GH_REPO/archive/v${version}.tar.gz"
