@@ -56,6 +56,10 @@ download_release() {
 		;;
 	esac
 
+	if [ "$os" = "macos" ] && [ "$arch" = "arm64" ]; then
+		arch="apple_silicon"
+	fi
+
 	# TODO: Adapt the release URL convention for roc
 	# url="$GH_REPO/archive/v${version}.tar.gz"
 	url="$GH_REPO/releases/download/nightly/roc_${version}-${os}_${arch}-latest.tar.gz"
