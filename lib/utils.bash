@@ -82,9 +82,13 @@ download_release() {
 	fi
 
 	# Construct download URL based on the repo
-	# Both repos use: roc-${os}_${arch}-${tag}.tar.gz
-	# The tag is used as-is (nightly tags like "nightly-2024-01-15" or stable tags like "0.10.0")
-	asset_name="roc-${os}_${arch}-${version}.tar.gz"
+	if [ "$repo" = "$GH_NIGHTLY_REPO" ]; then
+		# Nightly repo: roc_nightly-${os}_${arch}-${tag}.tar.gz
+		asset_name="roc_nightly-${os}_${arch}-${version}.tar.gz"
+	else
+		# Stable repo: roc-${os}_${arch}-${tag}.tar.gz
+		asset_name="roc-${os}_${arch}-${version}.tar.gz"
+	fi
 	url="${repo}/releases/download/${version}/${asset_name}"
 
 	echo "* Downloading $TOOL_NAME release $version from $(basename "$repo")..."
